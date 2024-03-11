@@ -1,0 +1,296 @@
+Program.Sub.Preflight.Start
+V.Global.iSeqNum.Declare(Long,-1)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.bExist.Declare(Boolean,False)
+V.Local.sDir.Declare(String)
+V.Local.iRet.Declare(Long)
+
+F.Intrinsic.Date.Weekday(V.Ambient.Date,V.Local.iRet)
+
+F.Intrinsic.Control.If(V.Caller.Switches,<>,"R")
+	F.Intrinsic.Control.If(V.Local.iRet,<>,3)
+		F.Intrinsic.Control.End
+
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+'opening connection
+F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+
+F.Intrinsic.String.Build("{0}\Upload Errors\{1}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sDir)
+F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bExist)
+F.Intrinsic.Control.If(V.Local.bExist,=,False)
+	F.Intrinsic.File.CreateDir(V.Local.sDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\MSC Out\{1}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sDir)
+F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bExist)
+F.Intrinsic.Control.If(V.Local.bExist,=,False)
+	F.Intrinsic.File.CreateDir(V.Local.sDir)
+F.Intrinsic.Control.EndIf
+
+'checking if directories exist if not create them
+F.Intrinsic.String.Build("{0}\MSC In\{1}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sDir)
+F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bExist)
+F.Intrinsic.Control.If(V.Local.bExist,=,False)
+	F.Intrinsic.File.CreateDir(V.Local.sDir)
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.CallSub(read_file,"Path",V.Local.sDir)
+
+F.Intrinsic.Control.CallSub(exit)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(exit)
+Function.Intrinsic.Control.EndIf
+
+Program.Sub.Main.End
+
+Program.Sub.Read_File.Start
+F.Intrinsic.Control.SetErrorHandler("Read_File_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sFile.Declare(String)
+V.Local.sFilePath.Declare(String)
+V.Local.i.Declare(Long)
+V.Local.sDir.Declare(String)
+V.Local.sPath.Declare(String)
+
+F.Intrinsic.String.Build("{0}\*.csv",V.Args.Path,V.Local.sPath)
+F.Intrinsic.File.GetFileList(V.Local.sPath,V.Local.sDir)
+
+F.Intrinsic.Control.If(V.Local.sDir.Length,>,0)
+	F.Intrinsic.UI.InvokeWaitDialog("Getting File(s).......")
+	F.Intrinsic.String.Split(V.Local.sDir,":",V.Local.sDir)
+	'Looping through file list and reading each file to process 
+	F.Intrinsic.Control.For(V.Local.i,0,V.Local.sDir.UBound,1)
+		F.Intrinsic.UI.InvokeWaitDialog("Processing File.......")
+		F.Intrinsic.String.Build("{0}\{1}",V.Args.Path,V.Local.sDir(V.Local.i),V.Local.sFilePath)
+		F.Intrinsic.File.FileToString(V.Local.sFilePath,V.Local.sRet)
+		F.Intrinsic.Control.CallSub(build_file,"Ret",V.Local.sRet,"Dir",V.Local.sDir(V.Local.i))
+	F.Intrinsic.Control.Next(V.Local.i)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("There are no files to process in '{0}'",V.Args.Path,V.Local.sRet)
+	F.Intrinsic.UI.Msgbox(V.Local.sRet)
+	F.Intrinsic.Control.CallSub(exit)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.UI.CloseWaitDialog
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Read_File_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(exit)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Read_File.End
+
+Program.Sub.Exit.Start
+F.Intrinsic.Control.SetErrorHandler("Exit_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+'closing connection
+F.ODBC.Connection!con.Close
+'ending program
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Exit_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Exit.End
+
+Program.Sub.Build_File.Start
+F.Intrinsic.Control.SetErrorHandler("Build_File_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.i.Declare(Long)
+V.Local.sRet.Declare(String)
+V.Local.bValid.Declare(Boolean,True)
+V.Local.sWO.Declare(String)
+V.Local.sSuffix.Declare(String)
+V.Local.sDate.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sSql.Declare(String)
+V.Local.sFileError.Declare(String)
+V.Local.sDesc.Declare(String)
+V.Local.sFileData.Declare(String)
+V.Local.sFile.Declare(String)
+V.Local.sRecords.Declare(String)
+
+F.Intrinsic.String.Split(V.Args.Ret,"$%",V.Local.sRecords)
+'starting at index 1 since the first line will be the headers
+F.Intrinsic.Control.For(V.Local.i,1,V.Local.sRecords.uBound,1)
+	V.Local.bValid.Set(True)
+	F.Intrinsic.String.Split(V.Local.sRecords(V.Local.i),",",V.Local.sRet)
+	'setting Work order
+	F.Intrinsic.String.Left(V.Local.sRet(0),6,V.Local.sWO)
+	F.Intrinsic.String.Build("Select Job From V_Job_Header Where Job = '{0}'",V.Local.sWO,V.Local.sSql)
+	F.ODBC.Connection!con.OpenLocalRecordsetRO("rst",V.Local.sSql)
+	F.Intrinsic.Control.If(V.ODBC.con!rst.EOF,=,True)
+		'add error message to error file
+		F.Intrinsic.Control.If(V.Local.sFileError.Length,>,0)
+			F.Intrinsic.String.Build("{0}Job {1} is not in Job Header Table{2}",V.Local.sFileError,V.Local.sWO,V.Ambient.NewLine,V.Local.sFileError)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.String.Build("Job {0} is not in Job Header Table{1}",V.Local.sWO,V.Ambient.NewLine,V.Local.sFileError)
+		F.Intrinsic.Control.EndIf
+		'setting valid boolean to False
+		V.Local.bValid.Set(False)
+	F.Intrinsic.Control.EndIf
+	F.ODBC.con!rst.Close	
+	'setting suffix
+	F.Intrinsic.String.Mid(V.Local.sRet(0),7,3,V.Local.sSuffix)	
+	'Part
+	'validating part
+	F.Intrinsic.Control.If(V.Local.sRet(2).Length,>,11)
+		'add error message to error file
+		F.Intrinsic.Control.If(V.Local.sFileError.Length,>,0)
+			F.Intrinsic.String.Build("{0}Item length is greater than 20 characters{1}",V.Local.sFileError,V.Ambient.NewLine,V.Local.sFileError)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.String.Build("Item length is greater than 20 characters{0}",V.Ambient.NewLine,V.Local.sFileError)
+		F.Intrinsic.Control.EndIf
+		'setting valid boolean to False
+		V.Local.bValid.Set(False)
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.String.Build("MSCVItem#{0}",V.Local.sRet(2),V.Local.sRet(2))	
+	'Part Description
+	'if desc > 30 split at 30 and add comment line to job operations table LMO = 'C'
+	F.Intrinsic.Control.If(V.Local.sRet(3).Length,>,20)
+		F.Intrinsic.String.LimitSplit(V.Local.sRet(3),20,V.Local.sDesc)
+	F.Intrinsic.Control.Else
+		V.Local.sDesc.Set(V.Local.sRet(3))
+	F.Intrinsic.Control.EndIf
+	'adding Stp to item description
+
+	F.Intrinsic.String.Right(V.Local.sRet(0),6,V.Local.sTemp)
+	F.Intrinsic.String.Build("Stp{0}:{1}",V.Local.sTemp,V.Local.sDesc,V.Local.sDesc)	
+	'Qty
+	F.Intrinsic.Control.If(V.Local.sRet(5).IsNumeric,=,False)
+		F.Intrinsic.String.Build("{0}Qty is not numeric{1}",V.Local.sError,V.Ambient.NewLine,V.Local.sFileError)
+		V.Local.bValid.Set(False)
+	F.Intrinsic.Control.EndIf	
+	'Unit Cost
+	F.Intrinsic.Control.If(V.Local.sRet(6).IsNumeric,=,False)
+		F.Intrinsic.String.Build("{0}Unit Cost is not numeric{1}",V.Local.sError,V.Ambient.NewLine,V.Local.sFileError)
+		V.Local.bValid.Set(False)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.If(V.Local.bValid,=,True)
+		'new line for new misc job
+		F.Intrinsic.Control.If(V.Local.sFile.Length,>,0)
+			F.Intrinsic.String.Build("{0}{1}",V.Local.sFile,V.Ambient.NewLine,V.Local.sFile)
+		F.Intrinsic.Control.EndIf
+		V.Local.sFileData.Set("")
+		'place work info in datatable for saving
+		' will add detail and pad, as we go
+		' Job (1-6)
+		F.Intrinsic.String.RPad(V.Local.sWO," ",6,V.Local.sFileData)
+		' Suffix (7-9)
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sSuffix,V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",9,V.Local.sFileData)
+		' Seq (10-15)
+		' always 995000
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,"995000",V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",15,V.Local.sFileData)
+		' Date (16-21) - selected date as yymmdd
+		F.Intrinsic.String.Format(V.Local.sRet(1).DateComp,"YYMMDD",V.Local.sTemp)
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sTemp,V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",21,V.Local.sFileData)
+		' Employee Name (22-51) 
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",51,V.Local.sFileData)
+		'Description (52-81)
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sDesc,V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",101,V.Local.sFileData)
+		' Emp Dept
+		F.Intrinsic.String.Build(V.Local.sFileData," ",V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",141,V.Local.sFileData)
+		' Employee Number (142-146)
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",150,V.Local.sFileData)
+		' Part (151-170) 
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sRet(2),V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",170,V.Local.sFileData)
+		' Hours
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sRet(5).Format*0.0000,V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",219,V.Local.sFileData)
+		'Labor Dollars
+		F.Intrinsic.String.Split(V.Local.sRet(7),V.Ambient.NewLine,V.Local.sTemp)
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sTemp(0).Format*#0.0000,V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",235,V.Local.sFileData)
+		' OH Dollars (236-251) 
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",286,V.Local.sFileData)
+		' LMO
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,"M",V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",541,V.Local.sFileData)
+		'Material Unit Cost (542-560)
+		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)
+		F.Intrinsic.String.RPad(V.Local.sFileData," ",655,V.Local.sFileData)
+
+		F.Intrinsic.Control.If(V.Local.sFile.Length,>,0)
+			F.Intrinsic.String.Build("{0}{1}",V.Local.sFile,V.Local.sFileData,V.Local.sFile)
+		F.Intrinsic.Control.Else
+			V.Local.sFile.Set(V.Local.sFileData)
+		F.Intrinsic.Control.EndIf
+		
+	F.Intrinsic.Control.Else
+		'create error file 
+		F.Intrinsic.String.Build("{0}\Upload Errors\{1}\WO{2}.TXT",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sWO,V.Local.sTemp)
+		F.Intrinsic.File.String2File(V.Local.sTemp,V.Local.sFileError)
+		V.Local.sFileError.Set("")
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Next(V.Local.i)
+
+F.Intrinsic.Control.If(V.Local.sFile.Length,>,0)
+	F.Intrinsic.UI.ChangeWaitStatus("Uploading Job Detail Records.....")
+	F.Intrinsic.String.Build("{0}\JOBDETL.TXT",V.Caller.FilesDir,V.Local.sRet)
+	F.Intrinsic.File.String2File(V.Local.sRet,V.Local.sFile)
+	F.Global.General.CallWrapperSync(50,"UPLJOBDT/U")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\MSC Out\{1}\{2}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Args.Dir,V.Local.sRet)
+F.Intrinsic.String.Build("{0}\MSC In\{1}\{2}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Args.Dir,V.Local.sTemp)
+F.Intrinsic.File.MoveFile(V.Local.sTemp,V.Local.sRet,V.Local.i)
+	
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Build_File_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(exit)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Build_File.End
+
+Program.Sub.Comments.Start
+${$0$}$$}$RLK$}$2/7/2017 10:26:22 AM$}$False
+Program.Sub.Comments.End
