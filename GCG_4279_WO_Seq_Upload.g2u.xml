@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SyntaxEdit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Pages>
+    <DefaultPage>
+      <Header />
+      <Footer />
+    </DefaultPage>
+  </Pages>
+  <DisplayStrings />
+  <Selection>
+    <SelectionRect>
+      <Location>
+        <X>0</X>
+        <Y>295</Y>
+      </Location>
+      <Size>
+        <Width>24</Width>
+        <Height>2</Height>
+      </Size>
+      <X>0</X>
+      <Y>295</Y>
+      <Width>24</Width>
+      <Height>2</Height>
+    </SelectionRect>
+    <Options>UseColors OverwriteBlocks SelectLineOnTripleClick CopyLineWhenEmpty SelectWordOnCtrlClick</Options>
+  </Selection>
+  <Gutter>
+    <Options>PaintLineNumbers PaintBookMarks PaintLineModificators</Options>
+  </Gutter>
+  <Margin>
+    <Visible>false</Visible>
+  </Margin>
+  <LineStyles />
+  <LineSeparator />
+  <Printing>
+    <Footer />
+    <Header />
+  </Printing>
+  <WhiteSpace />
+  <TextSource>
+    <Position>
+      <X>0</X>
+      <Y>295</Y>
+    </Position>
+    <Lexer>
+      <Scheme>
+        <Author>Quantum Whale, LLC.</Author>
+        <Copyright>Copyright (c) 2004 - 2014 Quantum Whale LLC.</Copyright>
+        <FileType>gas</FileType>
+        <Version>1.5</Version>
+        <Styles>
+          <Style>
+            <Name>idents</Name>
+            <ForeColor>ControlText</ForeColor>
+          </Style>
+          <Style>
+            <Name>numbers</Name>
+            <ForeColor>ControlText</ForeColor>
+          </Style>
+          <Style>
+            <Name>reswords</Name>
+            <ForeColor>Blue</ForeColor>
+          </Style>
+          <Style>
+            <Name>comments</Name>
+            <ForeColor>Green</ForeColor>
+            <PlainText>true</PlainText>
+          </Style>
+          <Style>
+            <Name>xmlcomments</Name>
+            <ForeColor>Gray</ForeColor>
+          </Style>
+          <Style>
+            <Name>symbols</Name>
+            <ForeColor>WindowText</ForeColor>
+          </Style>
+          <Style>
+            <Name>whitespace</Name>
+            <ForeColor>WindowText</ForeColor>
+          </Style>
+          <Style>
+            <Name>strings</Name>
+            <ForeColor>Maroon</ForeColor>
+            <PlainText>true</PlainText>
+          </Style>
+          <Style>
+            <Name>directives</Name>
+            <ForeColor>Blue</ForeColor>
+          </Style>
+          <Style>
+            <Name>htmlparams</Name>
+            <ForeColor>Red</ForeColor>
+          </Style>
+          <Style>
+            <Name>syntax errors</Name>
+            <ForeColor>Red</ForeColor>
+          </Style>
+          <Style>
+            <Name>codes nippets</Name>
+            <ForeColor>Black</ForeColor>
+            <BackColor>255:180:228:180</BackColor>
+          </Style>
+          <Style>
+            <Name>GabReservedWords</Name>
+            <ForeColor>Blue</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabTokenWithBrackets</Name>
+            <ForeColor>Gray</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabFunctionIntrinsicDebug</Name>
+            <ForeColor>White</ForeColor>
+            <BackColor>Red</BackColor>
+            <FontStyle>Bold</FontStyle>
+            <PlainText>true</PlainText>
+          </Style>
+          <Style>
+            <Name>GabVariable</Name>
+            <ForeColor>Teal</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabVariableSystemDefined</Name>
+            <ForeColor>Teal</ForeColor>
+            <FontStyle>Bold Italic</FontStyle>
+          </Style>
+          <Style>
+            <Name>GabGui</Name>
+            <ForeColor>OrangeRed</ForeColor>
+          </Style>
+          <Style>
+            <Name>GabProgramSubStartEnd</Name>
+            <ForeColor>Black</ForeColor>
+            <BackColor>LightGray</BackColor>
+            <FontStyle>Bold</FontStyle>
+            <PlainText>true</PlainText>
+          </Style>
+        </Styles>
+      </Scheme>
+    </Lexer>
+    <TextStrings>
+      <Lines>
+        <string>Program.Sub.Preflight.Start</string>
+        <string>V.Global.iSeqNum.Declare(Long,-1)</string>
+        <string>Program.Sub.Preflight.End</string>
+        <string />
+        <string>Program.Sub.Main.Start</string>
+        <string>F.Intrinsic.Control.SetErrorHandler("Main_Err")</string>
+        <string>F.Intrinsic.Control.ClearErrors</string>
+        <string />
+        <string>V.Local.sError.Declare(String)</string>
+        <string>V.Local.bExist.Declare(Boolean,False)</string>
+        <string>V.Local.sDir.Declare(String)</string>
+        <string>V.Local.iRet.Declare(Long)</string>
+        <string />
+        <string>F.Intrinsic.Date.Weekday(V.Ambient.Date,V.Local.iRet)</string>
+        <string />
+        <string>F.Intrinsic.Control.If(V.Caller.Switches,&lt;&gt;,"R")</string>
+        <string>	F.Intrinsic.Control.If(V.Local.iRet,&lt;&gt;,3)</string>
+        <string>		F.Intrinsic.Control.End</string>
+        <string />
+        <string>	F.Intrinsic.Control.EndIf</string>
+        <string>F.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>'opening connection</string>
+        <string>F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)</string>
+        <string />
+        <string>F.Intrinsic.String.Build("{0}\Upload Errors\{1}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sDir)</string>
+        <string>F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bExist)</string>
+        <string>F.Intrinsic.Control.If(V.Local.bExist,=,False)</string>
+        <string>	F.Intrinsic.File.CreateDir(V.Local.sDir)</string>
+        <string>F.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>F.Intrinsic.String.Build("{0}\MSC Out\{1}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sDir)</string>
+        <string>F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bExist)</string>
+        <string>F.Intrinsic.Control.If(V.Local.bExist,=,False)</string>
+        <string>	F.Intrinsic.File.CreateDir(V.Local.sDir)</string>
+        <string>F.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>'checking if directories exist if not create them</string>
+        <string>F.Intrinsic.String.Build("{0}\MSC In\{1}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sDir)</string>
+        <string>F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bExist)</string>
+        <string>F.Intrinsic.Control.If(V.Local.bExist,=,False)</string>
+        <string>	F.Intrinsic.File.CreateDir(V.Local.sDir)</string>
+        <string>F.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>F.Intrinsic.Control.CallSub(read_file,"Path",V.Local.sDir)</string>
+        <string />
+        <string>F.Intrinsic.Control.CallSub(exit)</string>
+        <string />
+        <string>F.Intrinsic.Control.ExitSub</string>
+        <string />
+        <string>F.Intrinsic.Control.Label("Main_Err")</string>
+        <string>F.Intrinsic.Control.If(V.Ambient.ErrorNumber,&lt;&gt;,0)</string>
+        <string>	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sError)</string>
+        <string>	F.Intrinsic.Control.CallSub(exit)</string>
+        <string>Function.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>Program.Sub.Main.End</string>
+        <string />
+        <string>Program.Sub.Read_File.Start</string>
+        <string>F.Intrinsic.Control.SetErrorHandler("Read_File_Err")</string>
+        <string>F.Intrinsic.Control.ClearErrors</string>
+        <string />
+        <string>V.Local.sError.Declare(String)</string>
+        <string>V.Local.sRet.Declare(String)</string>
+        <string>V.Local.sFile.Declare(String)</string>
+        <string>V.Local.sFilePath.Declare(String)</string>
+        <string>V.Local.i.Declare(Long)</string>
+        <string>V.Local.sDir.Declare(String)</string>
+        <string>V.Local.sPath.Declare(String)</string>
+        <string />
+        <string>F.Intrinsic.String.Build("{0}\*.csv",V.Args.Path,V.Local.sPath)</string>
+        <string>F.Intrinsic.File.GetFileList(V.Local.sPath,V.Local.sDir)</string>
+        <string />
+        <string>F.Intrinsic.Control.If(V.Local.sDir.Length,&gt;,0)</string>
+        <string>	F.Intrinsic.UI.InvokeWaitDialog("Getting File(s).......")</string>
+        <string>	F.Intrinsic.String.Split(V.Local.sDir,":",V.Local.sDir)</string>
+        <string>	'Looping through file list and reading each file to process </string>
+        <string>	F.Intrinsic.Control.For(V.Local.i,0,V.Local.sDir.UBound,1)</string>
+        <string>		F.Intrinsic.UI.InvokeWaitDialog("Processing File.......")</string>
+        <string>		F.Intrinsic.String.Build("{0}\{1}",V.Args.Path,V.Local.sDir(V.Local.i),V.Local.sFilePath)</string>
+        <string>		F.Intrinsic.File.FileToString(V.Local.sFilePath,V.Local.sRet)</string>
+        <string>		F.Intrinsic.Control.CallSub(build_file,"Ret",V.Local.sRet,"Dir",V.Local.sDir(V.Local.i))</string>
+        <string>	F.Intrinsic.Control.Next(V.Local.i)</string>
+        <string>F.Intrinsic.Control.Else</string>
+        <string>	F.Intrinsic.String.Build("There are no files to process in '{0}'",V.Args.Path,V.Local.sRet)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sRet)</string>
+        <string>	F.Intrinsic.Control.CallSub(exit)</string>
+        <string>F.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>F.Intrinsic.UI.CloseWaitDialog</string>
+        <string />
+        <string>F.Intrinsic.Control.ExitSub</string>
+        <string />
+        <string>F.Intrinsic.Control.Label("Read_File_Err")</string>
+        <string>F.Intrinsic.Control.If(V.Ambient.ErrorNumber,&lt;&gt;,0)</string>
+        <string>	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sError)</string>
+        <string>	F.Intrinsic.Control.CallSub(exit)</string>
+        <string>Function.Intrinsic.Control.EndIf</string>
+        <string />
+        <string />
+        <string>Program.Sub.Read_File.End</string>
+        <string />
+        <string>Program.Sub.Exit.Start</string>
+        <string>F.Intrinsic.Control.SetErrorHandler("Exit_Err")</string>
+        <string>F.Intrinsic.Control.ClearErrors</string>
+        <string />
+        <string>V.Local.sError.Declare(String)</string>
+        <string />
+        <string>'closing connection</string>
+        <string>F.ODBC.Connection!con.Close</string>
+        <string>'ending program</string>
+        <string>F.Intrinsic.Control.End</string>
+        <string />
+        <string>F.Intrinsic.Control.ExitSub</string>
+        <string />
+        <string>F.Intrinsic.Control.Label("Exit_Err")</string>
+        <string>F.Intrinsic.Control.If(V.Ambient.ErrorNumber,&lt;&gt;,0)</string>
+        <string>	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sError)</string>
+        <string>	F.Intrinsic.Control.End</string>
+        <string />
+        <string>Function.Intrinsic.Control.EndIf</string>
+        <string />
+        <string />
+        <string>Program.Sub.Exit.End</string>
+        <string />
+        <string>Program.Sub.Build_File.Start</string>
+        <string>F.Intrinsic.Control.SetErrorHandler("Build_File_Err")</string>
+        <string>F.Intrinsic.Control.ClearErrors</string>
+        <string />
+        <string>V.Local.sError.Declare(String)</string>
+        <string>V.Local.i.Declare(Long)</string>
+        <string>V.Local.sRet.Declare(String)</string>
+        <string>V.Local.bValid.Declare(Boolean,True)</string>
+        <string>V.Local.sWO.Declare(String)</string>
+        <string>V.Local.sSuffix.Declare(String)</string>
+        <string>V.Local.sDate.Declare(String)</string>
+        <string>V.Local.sTemp.Declare(String)</string>
+        <string>V.Local.sSql.Declare(String)</string>
+        <string>V.Local.sFileError.Declare(String)</string>
+        <string>V.Local.sDesc.Declare(String)</string>
+        <string>V.Local.sFileData.Declare(String)</string>
+        <string>V.Local.sFile.Declare(String)</string>
+        <string>V.Local.sRecords.Declare(String)</string>
+        <string />
+        <string>F.Intrinsic.String.Split(V.Args.Ret,"$%",V.Local.sRecords)</string>
+        <string>'starting at index 1 since the first line will be the headers</string>
+        <string>F.Intrinsic.Control.For(V.Local.i,1,V.Local.sRecords.uBound,1)</string>
+        <string>	V.Local.bValid.Set(True)</string>
+        <string>	F.Intrinsic.String.Split(V.Local.sRecords(V.Local.i),",",V.Local.sRet)</string>
+        <string>	'setting Work order</string>
+        <string>	F.Intrinsic.String.Left(V.Local.sRet(0),6,V.Local.sWO)</string>
+        <string>	F.Intrinsic.String.Build("Select Job From V_Job_Header Where Job = '{0}'",V.Local.sWO,V.Local.sSql)</string>
+        <string>	F.ODBC.Connection!con.OpenLocalRecordsetRO("rst",V.Local.sSql)</string>
+        <string>	F.Intrinsic.Control.If(V.ODBC.con!rst.EOF,=,True)</string>
+        <string>		'add error message to error file</string>
+        <string>		F.Intrinsic.Control.If(V.Local.sFileError.Length,&gt;,0)</string>
+        <string>			F.Intrinsic.String.Build("{0}Job {1} is not in Job Header Table{2}",V.Local.sFileError,V.Local.sWO,V.Ambient.NewLine,V.Local.sFileError)</string>
+        <string>		F.Intrinsic.Control.Else</string>
+        <string>			F.Intrinsic.String.Build("Job {0} is not in Job Header Table{1}",V.Local.sWO,V.Ambient.NewLine,V.Local.sFileError)</string>
+        <string>		F.Intrinsic.Control.EndIf</string>
+        <string>		'setting valid boolean to False</string>
+        <string>		V.Local.bValid.Set(False)</string>
+        <string>	F.Intrinsic.Control.EndIf</string>
+        <string>	F.ODBC.con!rst.Close	</string>
+        <string>	'setting suffix</string>
+        <string>	F.Intrinsic.String.Mid(V.Local.sRet(0),7,3,V.Local.sSuffix)	</string>
+        <string>	'Part</string>
+        <string>	'validating part</string>
+        <string>	F.Intrinsic.Control.If(V.Local.sRet(2).Length,&gt;,11)</string>
+        <string>		'add error message to error file</string>
+        <string>		F.Intrinsic.Control.If(V.Local.sFileError.Length,&gt;,0)</string>
+        <string>			F.Intrinsic.String.Build("{0}Item length is greater than 20 characters{1}",V.Local.sFileError,V.Ambient.NewLine,V.Local.sFileError)</string>
+        <string>		F.Intrinsic.Control.Else</string>
+        <string>			F.Intrinsic.String.Build("Item length is greater than 20 characters{0}",V.Ambient.NewLine,V.Local.sFileError)</string>
+        <string>		F.Intrinsic.Control.EndIf</string>
+        <string>		'setting valid boolean to False</string>
+        <string>		V.Local.bValid.Set(False)</string>
+        <string>	F.Intrinsic.Control.EndIf</string>
+        <string>	F.Intrinsic.String.Build("MSCVItem#{0}",V.Local.sRet(2),V.Local.sRet(2))	</string>
+        <string>	'Part Description</string>
+        <string>	'if desc &gt; 30 split at 30 and add comment line to job operations table LMO = 'C'</string>
+        <string>	F.Intrinsic.Control.If(V.Local.sRet(3).Length,&gt;,20)</string>
+        <string>		F.Intrinsic.String.LimitSplit(V.Local.sRet(3),20,V.Local.sDesc)</string>
+        <string>	F.Intrinsic.Control.Else</string>
+        <string>		V.Local.sDesc.Set(V.Local.sRet(3))</string>
+        <string>	F.Intrinsic.Control.EndIf</string>
+        <string>	'adding Stp to item description</string>
+        <string />
+        <string>	F.Intrinsic.String.Right(V.Local.sRet(0),6,V.Local.sTemp)</string>
+        <string>	F.Intrinsic.String.Build("Stp{0}:{1}",V.Local.sTemp,V.Local.sDesc,V.Local.sDesc)	</string>
+        <string>	'Qty</string>
+        <string>	F.Intrinsic.Control.If(V.Local.sRet(5).IsNumeric,=,False)</string>
+        <string>		F.Intrinsic.String.Build("{0}Qty is not numeric{1}",V.Local.sError,V.Ambient.NewLine,V.Local.sFileError)</string>
+        <string>		V.Local.bValid.Set(False)</string>
+        <string>	F.Intrinsic.Control.EndIf	</string>
+        <string>	'Unit Cost</string>
+        <string>	F.Intrinsic.Control.If(V.Local.sRet(6).IsNumeric,=,False)</string>
+        <string>		F.Intrinsic.String.Build("{0}Unit Cost is not numeric{1}",V.Local.sError,V.Ambient.NewLine,V.Local.sFileError)</string>
+        <string>		V.Local.bValid.Set(False)</string>
+        <string>	F.Intrinsic.Control.EndIf</string>
+        <string>	</string>
+        <string>	F.Intrinsic.Control.If(V.Local.bValid,=,True)</string>
+        <string>		'new line for new misc job</string>
+        <string>		F.Intrinsic.Control.If(V.Local.sFile.Length,&gt;,0)</string>
+        <string>			F.Intrinsic.String.Build("{0}{1}",V.Local.sFile,V.Ambient.NewLine,V.Local.sFile)</string>
+        <string>		F.Intrinsic.Control.EndIf</string>
+        <string>		V.Local.sFileData.Set("")</string>
+        <string>		'place work info in datatable for saving</string>
+        <string>		' will add detail and pad, as we go</string>
+        <string>		' Job (1-6)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sWO," ",6,V.Local.sFileData)</string>
+        <string>		' Suffix (7-9)</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sSuffix,V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",9,V.Local.sFileData)</string>
+        <string>		' Seq (10-15)</string>
+        <string>		' always 995000</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,"995000",V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",15,V.Local.sFileData)</string>
+        <string>		' Date (16-21) - selected date as yymmdd</string>
+        <string>		F.Intrinsic.String.Format(V.Local.sRet(1).DateComp,"YYMMDD",V.Local.sTemp)</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sTemp,V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",21,V.Local.sFileData)</string>
+        <string>		' Employee Name (22-51) </string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",51,V.Local.sFileData)</string>
+        <string>		'Description (52-81)</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sDesc,V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",101,V.Local.sFileData)</string>
+        <string>		' Emp Dept</string>
+        <string>		F.Intrinsic.String.Build(V.Local.sFileData," ",V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",141,V.Local.sFileData)</string>
+        <string>		' Employee Number (142-146)</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",150,V.Local.sFileData)</string>
+        <string>		' Part (151-170) </string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sRet(2),V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",170,V.Local.sFileData)</string>
+        <string>		' Hours</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sRet(5).Format*0.0000,V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",219,V.Local.sFileData)</string>
+        <string>		'Labor Dollars</string>
+        <string>		F.Intrinsic.String.Split(V.Local.sRet(7),V.Ambient.NewLine,V.Local.sTemp)</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,V.Local.sTemp(0).Format*#0.0000,V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",235,V.Local.sFileData)</string>
+        <string>		' OH Dollars (236-251) </string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",286,V.Local.sFileData)</string>
+        <string>		' LMO</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData,"M",V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",541,V.Local.sFileData)</string>
+        <string>		'Material Unit Cost (542-560)</string>
+        <string>		F.Intrinsic.String.Build("{0}{1}",V.Local.sFileData," ",V.Local.sFileData)</string>
+        <string>		F.Intrinsic.String.RPad(V.Local.sFileData," ",655,V.Local.sFileData)</string>
+        <string />
+        <string>		F.Intrinsic.Control.If(V.Local.sFile.Length,&gt;,0)</string>
+        <string>			F.Intrinsic.String.Build("{0}{1}",V.Local.sFile,V.Local.sFileData,V.Local.sFile)</string>
+        <string>		F.Intrinsic.Control.Else</string>
+        <string>			V.Local.sFile.Set(V.Local.sFileData)</string>
+        <string>		F.Intrinsic.Control.EndIf</string>
+        <string>		</string>
+        <string>	F.Intrinsic.Control.Else</string>
+        <string>		'create error file </string>
+        <string>		F.Intrinsic.String.Build("{0}\Upload Errors\{1}\WO{2}.TXT",V.Caller.FilesDir,V.Caller.CompanyCode,V.Local.sWO,V.Local.sTemp)</string>
+        <string>		F.Intrinsic.File.String2File(V.Local.sTemp,V.Local.sFileError)</string>
+        <string>		V.Local.sFileError.Set("")</string>
+        <string>	F.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>F.Intrinsic.Control.Next(V.Local.i)</string>
+        <string />
+        <string>F.Intrinsic.Control.If(V.Local.sFile.Length,&gt;,0)</string>
+        <string>	F.Intrinsic.UI.ChangeWaitStatus("Uploading Job Detail Records.....")</string>
+        <string>	F.Intrinsic.String.Build("{0}\JOBDETL.TXT",V.Caller.FilesDir,V.Local.sRet)</string>
+        <string>	F.Intrinsic.File.String2File(V.Local.sRet,V.Local.sFile)</string>
+        <string>	F.Global.General.CallWrapperSync(50,"UPLJOBDT/A")</string>
+        <string>F.Intrinsic.Control.EndIf</string>
+        <string />
+        <string>F.Intrinsic.String.Build("{0}\MSC Out\{1}\{2}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Args.Dir,V.Local.sRet)</string>
+        <string>F.Intrinsic.String.Build("{0}\MSC In\{1}\{2}",V.Caller.FilesDir,V.Caller.CompanyCode,V.Args.Dir,V.Local.sTemp)</string>
+        <string>F.Intrinsic.File.MoveFile(V.Local.sTemp,V.Local.sRet,V.Local.i)</string>
+        <string>	</string>
+        <string>F.Intrinsic.Control.ExitSub</string>
+        <string />
+        <string>F.Intrinsic.Control.Label("Build_File_Err")</string>
+        <string>F.Intrinsic.Control.If(V.Ambient.ErrorNumber,&lt;&gt;,0)</string>
+        <string>	Function.Intrinsic.String.Concat("Project: GCG_4279_WO_Seq_Upload.g2u",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)</string>
+        <string>	F.Intrinsic.UI.Msgbox(V.Local.sError)</string>
+        <string>	F.Intrinsic.Control.CallSub(exit)</string>
+        <string>Function.Intrinsic.Control.EndIf</string>
+        <string />
+        <string />
+        <string>Program.Sub.Build_File.End</string>
+        <string />
+        <string>Program.Sub.Comments.Start</string>
+        <string>${$0$}$$}$RLK$}$2/7/2017 10:26:22 AM$}$False</string>
+        <string>Program.Sub.Comments.End</string>
+      </Lines>
+    </TextStrings>
+  </TextSource>
+  <Scrolling>
+    <WindowOriginY>240</WindowOriginY>
+  </Scrolling>
+  <Outlining>
+    <AllowOutlining>true</AllowOutlining>
+    <ImageSize>8</ImageSize>
+    <Ranges>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>0</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>2</Y>
+        </EndPoint>
+        <Text>Program.Sub.Preflight</Text>
+        <DisplayText>Program.Sub.Preflight</DisplayText>
+        <Visible>false</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>4</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>57</Y>
+        </EndPoint>
+        <Text>Program.Sub.Main</Text>
+        <DisplayText>Program.Sub.Main</DisplayText>
+        <Visible>true</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>59</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>102</Y>
+        </EndPoint>
+        <Text>Program.Sub.Read_File</Text>
+        <DisplayText>Program.Sub.Read_File</DisplayText>
+        <Visible>true</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>104</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>126</Y>
+        </EndPoint>
+        <Text>Program.Sub.Exit</Text>
+        <DisplayText>Program.Sub.Exit</DisplayText>
+        <Visible>true</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>128</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>293</Y>
+        </EndPoint>
+        <Text>Program.Sub.Build_File</Text>
+        <DisplayText>Program.Sub.Build_File</DisplayText>
+        <Visible>true</Visible>
+        <Level>0</Level>
+      </Range>
+      <Range>
+        <StartPoint>
+          <X>0</X>
+          <Y>295</Y>
+        </StartPoint>
+        <EndPoint>
+          <X>2147483647</X>
+          <Y>297</Y>
+        </EndPoint>
+        <Text>Program.Sub.Comments</Text>
+        <DisplayText>Program.Sub.Comments</DisplayText>
+        <Visible>false</Visible>
+        <Level>0</Level>
+      </Range>
+    </Ranges>
+  </Outlining>
+  <HyperText />
+  <Spelling />
+  <Braces />
+</SyntaxEdit>
